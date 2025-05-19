@@ -1,5 +1,7 @@
 import os
 import numpy as np
+import math
+import base64
 
 
 
@@ -22,7 +24,53 @@ s_box = [
     ['8c', 'a1', '89', '0d', 'bf', 'e6', '42', '68', '41', '99', '2d', '0f', 'b0', '54', 'bb', '16']
 ]
 
+L = [
+    ['00', '00', '01', '19', '02', '32', '1a', 'c6', '03', 'df', '33', 'ee', '1b', '68', 'c7', '4b'],
+    ['04', '64', 'e0', '0e', '34', '8d', 'ef', '81', '1c', 'c1', '69', 'f8', 'c8', '08', '4c', '71'],
+    ['05', '8a', '65', '2f', 'e1', '24', '0f', '21', '35', '93', '8e', 'da', 'f0', '12', '82', '45'],
+    ['1d', 'b5', 'c2', '7d', '6a', '27', 'f9', 'b9', 'c9', '9a', '09', '78', '4d', 'e4', '72', 'a6'],
+    ['06', 'bf', '8b', '62', '66', 'dd', '30', 'fd', 'e2', '98', '25', 'b3', '10', '91', '22', '88'],
+    ['36', 'd0', '94', 'ce', '8f', '96', 'db', 'bd', 'f1', 'd2', '13', '5c', '83', '38', '46', '40'],
+    ['1e', '42', 'b6', 'a3', 'c3', '48', '7e', '6e', '6b', '3a', '28', '54', 'fa', '85', 'ba', '3d'],
+    ['ca', '5e', '9b', '9f', '0a', '15', '79', '2b', '4e', 'd4', 'e5', 'ac', '73', 'f3', 'a7', '57'],
+    ['07', '70', 'c0', 'f7', '8c', '80', '63', '0d', '67', '4a', 'de', 'ed', '31', 'c5', 'fe', '18'],
+    ['e3', 'a5', '99', '77', '26', 'b8', 'b4', '7c', '11', '44', '92', 'd9', '23', '20', '89', '2e'],
+    ['37', '3f', 'd1', '5b', '95', 'bc', 'cf', 'cd', '90', '87', '97', 'b2', 'dc', 'fc', 'be', '61'],
+    ['f2', '56', 'd3', 'ab', '14', '2a', '5d', '9e', '84', '3c', '39', '53', '47', '6d', '41', 'a2'],
+    ['1f', '2d', '43', 'd8', 'b7', '7b', 'a4', '76', 'c4', '17', '49', 'ec', '7f', '0c', '6f', 'f6'],
+    ['6c', 'a1', '3b', '52', '29', '9d', '55', 'aa', 'fb', '60', '86', 'b1', 'bb', 'cc', '3e', '5a'],
+    ['cb', '59', '5f', 'b0', '9c', 'a9', 'a0', '51', '0b', 'f5', '16', 'eb', '7a', '75', '2c', 'd7'],
+    ['4f', 'ae', 'd5', 'e9', 'e6', 'e7', 'e8', 'd6', '74', 'f4', 'ea', 'a8', '50', '8b', '5b', 'f9']
+]
+
+E = [
+    ['01', '02', '04', '08', '10', '20', '40', '80', '1b', '36', '6c', 'd8', 'ab', '4d', '9a', '2f'],
+    ['5e', 'bc', '63', 'c6', '97', '35', '6a', 'd4', 'b3', '7d', 'fa', 'ef', 'c5', '91', '39', '72'],
+    ['e4', 'd3', 'bd', '61', 'c2', '9f', '25', '4a', '94', '33', '66', 'cc', '83', '1d', '3a', '74'],
+    ['e8', 'cb', '8d', '01', '02', '04', '08', '10', '20', '40', '80', '1b', '36', '6c', 'd8', 'ab'],
+    ['4d', '9a', '2f', '5e', 'bc', '63', 'c6', '97', '35', '6a', 'd4', 'b3', '7d', 'fa', 'ef', 'c5'],
+    ['91', '39', '72', 'e4', 'd3', 'bd', '61', 'c2', '9f', '25', '4a', '94', '33', '66', 'cc', '83'],
+    ['1d', '3a', '74', 'e8', 'cb', '8d', '01', '02', '04', '08', '10', '20', '40', '80', '1b', '36'],
+    ['6c', 'd8', 'ab', '4d', '9a', '2f', '5e', 'bc', '63', 'c6', '97', '35', '6a', 'd4', 'b3', '7d'],
+    ['fa', 'ef', 'c5', '91', '39', '72', 'e4', 'd3', 'bd', '61', 'c2', '9f', '25', '4a', '94', '33'],
+    ['66', 'cc', '83', '1d', '3a', '74', 'e8', 'cb', '8d', '01', '02', '04', '08', '10', '20', '40'],
+    ['80', '1b', '36', '6c', 'd8', 'ab', '4d', '9a', '2f', '5e', 'bc', '63', 'c6', '97', '35', '6a'],
+    ['d4', 'b3', '7d', 'fa', 'ef', 'c5', '91', '39', '72', 'e4', 'd3', 'bd', '61', 'c2', '9f', '25'],
+    ['4a', '94', '33', '66', 'cc', '83', '1d', '3a', '74', 'e8', 'cb', '8d', '01', '02', '04', '08'],
+    ['10', '20', '40', '80', '1b', '36', '6c', 'd8', 'ab', '4d', '9a', '2f', '5e', 'bc', '63', 'c6'],
+    ['97', '35', '6a', 'd4', 'b3', '7d', 'fa', 'ef', 'c5', '91', '39', '72', 'e4', 'd3', 'bd', '61'],
+    ['c2', '9f', '25', '4a', '94', '33', '66', 'cc', '83', '1d', '3a', '74', 'e8', 'cb', '8d', '01'],
+    ['02', '04', '08', '10', '20', '40', '80', '1b', '36', '6c', 'd8', 'ab', '4d', '9a', '2f', '5e'],
+    ['bc', '63', 'c6', '97', '35', '6a', 'd4', 'b3', '7d', 'fa', 'ef', 'c5', '91', '39', '72', 'e4']
+]
+
+
 roundConstantTable = ['01', '02', '04', '08', '10', '20', '40', '80', '1b', '36']
+
+matrizMult = [['02','03','01','01'],
+              ['01','02','03','01'],
+              ['01','01','02','03'],
+              ['03','01','01','02']]
 
 
 print("Bem vindo ao cifrador/decifrador AES")
@@ -101,22 +149,155 @@ def expandirChaves():
             novaRoundKey[i] = novaWord.tolist()
             
         chaveExpandida.append(novaRoundKey)
-    for i in chaveExpandida:
-        print(i)
+    for i in range(len(chaveExpandida)):
+        chaveExpandida[i] = np.transpose(chaveExpandida[i])
+    return chaveExpandida
+
+def galoiMult(a, b):
+    if a =='00' or b == '00':
+        return '00'
+    elif a == '01':
+        return b
+    elif b == '01':
+        return a
+    
+    ra = L[int(a[0], 16)][int(a[1], 16)]
+    rb = L[int(b[0], 16)][int(b[0], 16)]
+    
+    r = format(int(ra, 16) + int(rb,16), '02x')
+    return E[int(r[0], 16)][int(r[1],16)]
+    
+    
+    
     
         
+ 
+def etapa4Cif(linha, coluna):
+    mults = []
+    for i, z in zip(linha, coluna):
+        mults.append(galoiMult(i, z))
+        
+    result = 0
+    for q in range(len(mults) - 1):
+        result = f'{int(mults[q], 16) ^ int(mults[q + 1], 16):02x}'
+    return result
+        
+        
+         
+            
         
 
-
 def cifrar():
-    deuCerto = expandirChaves()
-    if deuCerto == False:
+    chaveExpandida = expandirChaves()
+    if chaveExpandida == False:
         return None
     
     filePath = input("Forneça o caminho do arquivo a ser criptografado:")
     filePath = filePath.replace("\"", "")
+    #Lendo bytes arquivo e fazendo expansão pkcs#7 se necessário
     with open(filePath, 'rb') as file:
         contents = file.read()
+        byte_list = [b for b in contents]
+        nBytes = len(byte_list)
+        
+        #Verificando se o número de bytes é divisível por 16
+        if nBytes % 16 != 0:
+            if nBytes < 16:
+                for g in range(16 - nBytes):
+                    byte_list.append(16 - nBytes)
+            else:
+                nVezes = math.ceil(nBytes / 16)
+                dif = 16 * nVezes - nBytes
+                for g in range(dif):
+                    byte_list.append(dif)
+        
+        # Dividindo a mensagem em blocos de 16
+        blocos = []
+        bloco = []
+        for i in range(len(byte_list) + 1):
+            if i % 16 == 0 and i != 0:
+                blocoAux = np.array(bloco).reshape((4,4))
+                blocoAux = np.transpose(blocoAux)
+                blocos.append(blocoAux)
+                bloco = []
+            if i >= len(byte_list):
+                break
+            bloco.append(str(byte_list[i].to_bytes(1, byteorder='big').hex()))
+        cifrado = []
+        for bloquito in blocos:
+            #Fazendo etapa 1: Xor com roundKey(0)
+            int_matrix1 = np.vectorize(lambda x: int(x, 16))(bloquito)
+            int_matrix2 = np.vectorize(lambda x: int(x, 16))(chaveExpandida[0])
+            xor_result = np.bitwise_xor(int_matrix1, int_matrix2)
+            etapa1 = np.vectorize(lambda x: format(x, '02x'))(xor_result)
+            
+            for r in range(1, 10):
+                #Fazendo etapa 2: Subsituindo com s_box
+                etapa2 = etapa1
+                for byte in range(len(etapa2)):
+                    for cx in range(len(etapa2[byte])):
+                        wordAux = str(etapa2[byte][cx])
+                        linha = int(wordAux[0], 16)
+                        coluna = int(wordAux[1], 16)
+                        etapa2[byte][cx] = s_box[linha][coluna]
+                #Fazendo etapa 3: ShiftRows
+                etapa3 = etapa2
+                for z in range(len(etapa3)):
+                    etapa3[z] = np.roll(etapa3[z, :], -z)
+                #Fazendo etapa 4: MixColumns
+                etapa4 = np.empty((4,4), dtype='U2')
+                for p in range(etapa4.shape[0]):
+                    for j in range(etapa4.shape[1]):
+                        etapa4[p, j] = etapa4Cif(etapa3[:,j], matrizMult[p])
+                        
+                #Etapa 5: xor com RoundKey corrente
+                etapa5 = etapa4
+                int_matrix1 = np.vectorize(lambda x: int(x, 16))(etapa5)
+                int_matrix2 = np.vectorize(lambda x: int(x, 16))(chaveExpandida[r])
+                xor_result = np.bitwise_xor(int_matrix1, int_matrix2)
+                etapa5 = np.vectorize(lambda x: format(x, '02x'))(xor_result)
+                
+               
+            #Fazendo etapa 6: SubByte
+            etapa6 = etapa5 
+            for byte in range(len(etapa6)):
+                    for cx in range(len(etapa6[byte])):
+                        wordAux = str(etapa6[byte][cx])
+                        linha = int(wordAux[0], 16)
+                        coluna = int(wordAux[1], 16)
+                        etapa6[byte][cx] = s_box[linha][coluna]
+            #Fazendo etapa 7: ShiftRows
+            etapa7 = etapa6
+            for z in range(len(etapa7)):
+                etapa7[z] = np.roll(etapa7[z, :], -z)
+                
+            #Etapa 8: xor com RoundKey corrente
+            etapa8 = etapa7
+            int_matrix1 = np.vectorize(lambda x: int(x, 16))(etapa8)
+            int_matrix2 = np.vectorize(lambda x: int(x, 16))(chaveExpandida[10])
+            xor_result = np.bitwise_xor(int_matrix1, int_matrix2)
+            etapa8 = np.vectorize(lambda x: format(x, '02x'))(xor_result)
+            
+            cifrado.append(etapa8)
+        stringResult = ""
+        for i in cifrado:
+            for x in i.T:
+                for t in x:
+                    stringResult += str(t)
+                
+        newFileName = input("Qual o nome do arquivo a guardar a criptografia resultante? (não esqueça a extensao)")
+        
+        with open(newFileName, 'w') as f:
+            byte_datita = bytes.fromhex(stringResult)
+            b64 = base64.b64encode(byte_datita)
+            b64String = b64.decode('utf-8')
+            f.write(b64String)
+            
+            
+                
+            
+                
+        
         
 
 def decifrar():
