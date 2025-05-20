@@ -25,43 +25,41 @@ s_box = [
 ]
 
 L = [
-    ['00', '00', '01', '19', '02', '32', '1a', 'c6', '03', 'df', '33', 'ee', '1b', '68', 'c7', '4b'],
-    ['04', '64', 'e0', '0e', '34', '8d', 'ef', '81', '1c', 'c1', '69', 'f8', 'c8', '08', '4c', '71'],
-    ['05', '8a', '65', '2f', 'e1', '24', '0f', '21', '35', '93', '8e', 'da', 'f0', '12', '82', '45'],
-    ['1d', 'b5', 'c2', '7d', '6a', '27', 'f9', 'b9', 'c9', '9a', '09', '78', '4d', 'e4', '72', 'a6'],
-    ['06', 'bf', '8b', '62', '66', 'dd', '30', 'fd', 'e2', '98', '25', 'b3', '10', '91', '22', '88'],
-    ['36', 'd0', '94', 'ce', '8f', '96', 'db', 'bd', 'f1', 'd2', '13', '5c', '83', '38', '46', '40'],
-    ['1e', '42', 'b6', 'a3', 'c3', '48', '7e', '6e', '6b', '3a', '28', '54', 'fa', '85', 'ba', '3d'],
-    ['ca', '5e', '9b', '9f', '0a', '15', '79', '2b', '4e', 'd4', 'e5', 'ac', '73', 'f3', 'a7', '57'],
-    ['07', '70', 'c0', 'f7', '8c', '80', '63', '0d', '67', '4a', 'de', 'ed', '31', 'c5', 'fe', '18'],
-    ['e3', 'a5', '99', '77', '26', 'b8', 'b4', '7c', '11', '44', '92', 'd9', '23', '20', '89', '2e'],
-    ['37', '3f', 'd1', '5b', '95', 'bc', 'cf', 'cd', '90', '87', '97', 'b2', 'dc', 'fc', 'be', '61'],
-    ['f2', '56', 'd3', 'ab', '14', '2a', '5d', '9e', '84', '3c', '39', '53', '47', '6d', '41', 'a2'],
-    ['1f', '2d', '43', 'd8', 'b7', '7b', 'a4', '76', 'c4', '17', '49', 'ec', '7f', '0c', '6f', 'f6'],
-    ['6c', 'a1', '3b', '52', '29', '9d', '55', 'aa', 'fb', '60', '86', 'b1', 'bb', 'cc', '3e', '5a'],
-    ['cb', '59', '5f', 'b0', '9c', 'a9', 'a0', '51', '0b', 'f5', '16', 'eb', '7a', '75', '2c', 'd7'],
-    ['4f', 'ae', 'd5', 'e9', 'e6', 'e7', 'e8', 'd6', '74', 'f4', 'ea', 'a8', '50', '8b', '5b', 'f9']
+    ["00", "00", "19", "01", "32", "02", "1a", "c6", "4b", "c7", "1b", "68", "33", "ee", "df", "03"],
+    ["64", "04", "e0", "0e", "34", "8d", "81", "ef", "4c", "71", "08", "c8", "f8", "69", "1c", "c1"],
+    ["7d", "c2", "1d", "b5", "f9", "b9", "27", "6a", "4d", "e4", "a6", "72", "9a", "c9", "09", "78"],
+    ["65", "2f", "8a", "05", "21", "0f", "e1", "24", "12", "f0", "82", "45", "35", "93", "da", "8e"],
+    ["96", "8f", "db", "bd", "36", "d0", "ce", "94", "13", "5c", "d2", "f1", "40", "46", "83", "38"],
+    ["66", "dd", "fd", "30", "bf", "06", "8b", "62", "b3", "25", "e2", "98", "22", "88", "91", "10"],
+    ["7e", "6e", "48", "c3", "a3", "b6", "1e", "42", "3a", "6b", "28", "54", "fa", "85", "3d", "ba"],
+    ["2b", "79", "0a", "15", "9b", "9f", "5e", "ca", "4e", "d4", "ac", "e5", "f3", "73", "a7", "57"],
+    ["af", "58", "a8", "50", "f4", "ea", "d6", "74", "4f", "ae", "e9", "d5", "e7", "e6", "ad", "e8"],
+    ["2c", "d7", "75", "7a", "eb", "16", "0b", "f5", "59", "cb", "5f", "b0", "9c", "a9", "51", "a0"],
+    ["7f", "0c", "f6", "6f", "17", "c4", "49", "ec", "d8", "43", "1f", "2d", "a4", "76", "7b", "b7"],
+    ["cc", "bb", "3e", "5a", "fb", "60", "b1", "86", "3b", "52", "a1", "6c", "aa", "55", "29", "9d"],
+    ["97", "b2", "87", "90", "61", "be", "dc", "fc", "bc", "95", "cf", "cd", "37", "3f", "5b", "d1"],
+    ["53", "39", "84", "3c", "41", "a2", "6d", "47", "14", "2a", "9e", "5d", "56", "f2", "d3", "ab"],
+    ["44", "11", "92", "d9", "23", "20", "2e", "89", "b4", "7c", "b8", "26", "77", "99", "e3", "a5"],
+    ["67", "4a", "ed", "de", "c5", "31", "fe", "18", "0d", "63", "8c", "80", "c0", "f7", "70", "07"]
 ]
 
 E = [
-    ['01', '02', '04', '08', '10', '20', '40', '80', '1b', '36', '6c', 'd8', 'ab', '4d', '9a', '2f'],
-    ['5e', 'bc', '63', 'c6', '97', '35', '6a', 'd4', 'b3', '7d', 'fa', 'ef', 'c5', '91', '39', '72'],
-    ['e4', 'd3', 'bd', '61', 'c2', '9f', '25', '4a', '94', '33', '66', 'cc', '83', '1d', '3a', '74'],
-    ['e8', 'cb', '8d', '01', '02', '04', '08', '10', '20', '40', '80', '1b', '36', '6c', 'd8', 'ab'],
-    ['4d', '9a', '2f', '5e', 'bc', '63', 'c6', '97', '35', '6a', 'd4', 'b3', '7d', 'fa', 'ef', 'c5'],
-    ['91', '39', '72', 'e4', 'd3', 'bd', '61', 'c2', '9f', '25', '4a', '94', '33', '66', 'cc', '83'],
-    ['1d', '3a', '74', 'e8', 'cb', '8d', '01', '02', '04', '08', '10', '20', '40', '80', '1b', '36'],
-    ['6c', 'd8', 'ab', '4d', '9a', '2f', '5e', 'bc', '63', 'c6', '97', '35', '6a', 'd4', 'b3', '7d'],
-    ['fa', 'ef', 'c5', '91', '39', '72', 'e4', 'd3', 'bd', '61', 'c2', '9f', '25', '4a', '94', '33'],
-    ['66', 'cc', '83', '1d', '3a', '74', 'e8', 'cb', '8d', '01', '02', '04', '08', '10', '20', '40'],
-    ['80', '1b', '36', '6c', 'd8', 'ab', '4d', '9a', '2f', '5e', 'bc', '63', 'c6', '97', '35', '6a'],
-    ['d4', 'b3', '7d', 'fa', 'ef', 'c5', '91', '39', '72', 'e4', 'd3', 'bd', '61', 'c2', '9f', '25'],
-    ['4a', '94', '33', '66', 'cc', '83', '1d', '3a', '74', 'e8', 'cb', '8d', '01', '02', '04', '08'],
-    ['10', '20', '40', '80', '1b', '36', '6c', 'd8', 'ab', '4d', '9a', '2f', '5e', 'bc', '63', 'c6'],
-    ['97', '35', '6a', 'd4', 'b3', '7d', 'fa', 'ef', 'c5', '91', '39', '72', 'e4', 'd3', 'bd', '61'],
-    ['c2', '9f', '25', '4a', '94', '33', '66', 'cc', '83', '1d', '3a', '74', 'e8', 'cb', '8d', '01'],
-    ['02', '04', '08', '10', '20', '40', '80', '1b', '36', '6c', 'd8', 'ab', '4d', '9a', '2f', '5e'],
-    ['bc', '63', 'c6', '97', '35', '6a', 'd4', 'b3', '7d', 'fa', 'ef', 'c5', '91', '39', '72', 'e4']
+    ["01", "03", "05", "0f", "11", "33", "55", "ff", "1a", "2e", "72", "96", "a1", "f8", "13", "35"],
+    ["5f", "e1", "38", "48", "d8", "73", "95", "a4", "f7", "02", "06", "0a", "1e", "22", "66", "aa"],
+    ["e5", "34", "5c", "e4", "37", "59", "eb", "26", "6a", "be", "d9", "70", "90", "ab", "e6", "31"],
+    ["53", "f5", "04", "0c", "14", "3c", "44", "cc", "4f", "d1", "68", "b8", "d3", "6e", "a2", "fd"],
+    ["1c", "24", "6c", "b4", "c7", "52", "f6", "01", "03", "05", "0f", "11", "33", "55", "ff", "1a"],
+    ["2e", "72", "96", "a1", "f8", "13", "35", "5f", "e1", "38", "48", "d8", "73", "95", "a4", "f7"],
+    ["02", "06", "0a", "1e", "22", "66", "aa", "e5", "34", "5c", "e4", "37", "59", "eb", "26", "6a"],
+    ["be", "d9", "70", "90", "ab", "e6", "31", "53", "f5", "04", "0c", "14", "3c", "44", "cc", "4f"],
+    ["d1", "68", "b8", "d3", "6e", "a2", "fd", "1c", "24", "6c", "b4", "c7", "52", "f6", "01", "03"],
+    ["05", "0f", "11", "33", "55", "ff", "1a", "2e", "72", "96", "a1", "f8", "13", "35", "5f", "e1"],
+    ["38", "48", "d8", "73", "95", "a4", "f7", "02", "06", "0a", "1e", "22", "66", "aa", "e5", "34"],
+    ["5c", "e4", "37", "59", "eb", "26", "6a", "be", "d9", "70", "90", "ab", "e6", "31", "53", "f5"],
+    ["04", "0c", "14", "3c", "44", "cc", "4f", "d1", "68", "b8", "d3", "6e", "a2", "fd", "1c", "24"],
+    ["6c", "b4", "c7", "52", "f6", "01", "03", "05", "0f", "11", "33", "55", "ff", "1a", "2e", "72"],
+    ["96", "a1", "f8", "13", "35", "5f", "e1", "38", "48", "d8", "73", "95", "a4", "f7", "02", "06"],
+    ["0a", "1e", "22", "66", "aa", "e5", "34", "5c", "e4", "37", "59", "eb", "26", "6a", "be", "d9"]
 ]
 
 
@@ -177,9 +175,9 @@ def etapa4Cif(linha, coluna):
     for i, z in zip(linha, coluna):
         mults.append(galoiMult(i, z))
         
-    result = 0
-    for q in range(len(mults) - 1):
-        result = f'{int(mults[q], 16) ^ int(mults[q + 1], 16):02x}'
+    result = f'{int(mults[0], 16) ^ int(mults[1], 16):02x}'
+    result = f'{int(result, 16) ^ int(mults[2], 16):02x}'
+    result = f'{int(result, 16) ^ int(mults[3], 16):02x}'
     return result
         
         
@@ -223,13 +221,15 @@ def cifrar():
             if i >= len(byte_list):
                 break
             bloco.append(str(byte_list[i].to_bytes(1, byteorder='big').hex()))
+        
+        
         cifrado = []
         for bloquito in blocos:
             #Fazendo etapa 1: Xor com roundKey(0)
-            int_matrix1 = np.vectorize(lambda x: int(x, 16))(bloquito)
-            int_matrix2 = np.vectorize(lambda x: int(x, 16))(chaveExpandida[0])
-            xor_result = np.bitwise_xor(int_matrix1, int_matrix2)
-            etapa1 = np.vectorize(lambda x: format(x, '02x'))(xor_result)
+            etapa1 = bloquito.tolist()
+            for i in range(len(etapa1)):
+                for z in range(len(etapa1[i])):
+                    etapa1[i][z] = f'{int(etapa1[i][z], 16) ^ int(chaveExpandida[0][i][z], 16):02x}'
             
             for r in range(1, 10):
                 #Fazendo etapa 2: Subsituindo com s_box
@@ -243,19 +243,18 @@ def cifrar():
                 #Fazendo etapa 3: ShiftRows
                 etapa3 = etapa2
                 for z in range(len(etapa3)):
-                    etapa3[z] = np.roll(etapa3[z, :], -z)
+                    etapa3[z] = np.roll(etapa3[z], -z)
                 #Fazendo etapa 4: MixColumns
                 etapa4 = np.empty((4,4), dtype='U2')
                 for p in range(etapa4.shape[0]):
                     for j in range(etapa4.shape[1]):
-                        etapa4[p, j] = etapa4Cif(etapa3[:,j], matrizMult[p])
+                        etapa4[p, j] = etapa4Cif(matrizMult[p], [row[j] for row in etapa3])
                         
                 #Etapa 5: xor com RoundKey corrente
                 etapa5 = etapa4
-                int_matrix1 = np.vectorize(lambda x: int(x, 16))(etapa5)
-                int_matrix2 = np.vectorize(lambda x: int(x, 16))(chaveExpandida[r])
-                xor_result = np.bitwise_xor(int_matrix1, int_matrix2)
-                etapa5 = np.vectorize(lambda x: format(x, '02x'))(xor_result)
+                for i in range(len(etapa5)):
+                    for z in range(len(etapa5[i])):
+                        etapa5[i][z] = f'{int(etapa5[i][z], 16) ^ int(chaveExpandida[r][i][z], 16):02x}'
                 
                
             #Fazendo etapa 6: SubByte
@@ -273,12 +272,14 @@ def cifrar():
                 
             #Etapa 8: xor com RoundKey corrente
             etapa8 = etapa7
-            int_matrix1 = np.vectorize(lambda x: int(x, 16))(etapa8)
-            int_matrix2 = np.vectorize(lambda x: int(x, 16))(chaveExpandida[10])
-            xor_result = np.bitwise_xor(int_matrix1, int_matrix2)
-            etapa8 = np.vectorize(lambda x: format(x, '02x'))(xor_result)
+            for i in range(len(etapa8)):
+                    for z in range(len(etapa8[i])):
+                        etapa8[i][z] = f'{int(etapa8[i][z], 16) ^ int(chaveExpandida[10][i][z], 16):02x}'
             
             cifrado.append(etapa8)
+            
+        cifrado = np.array(cifrado)
+        
         stringResult = ""
         for i in cifrado:
             for x in i.T:
@@ -288,10 +289,14 @@ def cifrar():
         newFileName = input("Qual o nome do arquivo a guardar a criptografia resultante? (não esqueça a extensao)")
         
         with open(newFileName, 'w') as f:
-            byte_datita = bytes.fromhex(stringResult)
-            b64 = base64.b64encode(byte_datita)
-            b64String = b64.decode('utf-8')
-            f.write(b64String)
+            choice = input("Voce deseja o resultado em hex ou base64?\n1. Digite h para hexadecinal \n2. Digite b para base64\n")
+            if choice == 'b':
+                byte_datita = bytes.fromhex(stringResult)
+                b64 = base64.b64encode(byte_datita)
+                b64String = b64.decode('utf-8')
+                f.write(b64String)
+            else:
+                f.write(stringResult)
             
             
                 
