@@ -203,6 +203,15 @@ def galoiMult(a, b):
    
    
    
+def retirarPkcs7(ultimoBloco):
+    blocoAux = np.transpose(ultimoBloco)
+    flat = blocoAux.flatten()
+    paddingN = ultimoBloco[-1][-1]
+    paddingN = int(paddingN, 16)
+    if paddingN < 0 or paddingN > 16:
+        return ultimoBloco
+    flat = flat[:-paddingN]
+    return flat
     
     
     
@@ -278,10 +287,12 @@ def cifrar():
                 for z in range(len(bloquito)):
                     bloquito[z] = np.roll(bloquito[z], -z)
                 #Fazendo etapa 4: MixColumns
-                #for p in range(len(bloquito)):
-                #    for j in range(len(bloquito[p])):
-                #        bloquito[p, j] = etapa4Cif(bloquito[:, j], matrizMult[p])
-                        
+                etapa4 = np.zeros((4,4), dtype='<U2')
+                for p in range(len(bloquito)):
+                    for j in range(len(bloquito[p])):
+                        etapa4[p, j] = etapa4Cif(bloquito[:, j], matrizMult[p])
+                
+                bloquito = etapa4        
                 #Etapa 5: xor com RoundKey corrente
                 if r > 9:
                     for i in range(len(bloquito)):
@@ -315,10 +326,12 @@ def cifrar():
             for x in i.T:
                 for t in x:
                     stringResult += str(t)
-        newFileName = input("Qual o nome do arquivo a guardar a criptografia resultante? (não esqueça a extensao)")
+        newFileName = input("Qual o nome do arquivo a guardar a criptografia resultante?")
+        newFileName = newFileName + '.bin'
         
-        with open(newFileName, 'w') as f:
-            f.write(stringResult)
+        with open(newFileName, 'wb') as f:
+            binary_data = bytes.fromhex(stringResult)
+            f.write(binary_data)
             
             
                 
@@ -335,19 +348,16 @@ def decifrar():
     filePath = input("Forneça o caminho do arquivo a ser decifrado:")
     filePath = filePath.replace("\"", "")
     
-    with open(filePath, 'r') as file:
-        contents = file.read()
-        byte_list = []
-        for i in range(len(contents) - 1):
-            byte_list.append(f'{contents[i] + contents[i + 1]}')
-        nBytes = len(byte_list)
+    with open(filePath, 'rb') as file:
+        binary_data = file.read()
+        hex_str = binary_data.hex()
         
         # Dividindo a mensagem em blocos de 16
         blocos = []
         bloco = []
-        while len(contents) != 0:
-             bloco.append(f'{contents[0] + contents[1]}')
-             contents = contents[2:]
+        while len(hex_str) != 0:
+             bloco.append(f'{hex_str[0] + hex_str[1]}')
+             hex_str = hex_str[2:]
              if len(bloco) % 16 == 0:
                 blocoAux = np.array(bloco).reshape((4,4))
                 blocoAux = np.transpose(blocoAux)
@@ -377,15 +387,19 @@ def decifrar():
                         bloquito[byte][cx] = inv_s_box[linha][coluna]
             
             for r in range(10):
+                
             #Fazendo etapa4: RoundKey round
                 if r > 9:
                     for i in range(len(bloquito)):
                         for z in range(len(bloquito[i])):
                             bloquito[i][z] = f'{int(bloquito[i][z], 16) ^ int(chaveExpandida[r][i][z], 16):02x}'
             #Fazendo etapa5: InvMixColumns
-                #for p in range(len(bloquito)):
-                #    for j in range(len(bloquito[p])):
-                #        bloquito[p, j] = etapa4Cif(bloquito[:, j], matrixMultInv[p])
+                etapa4 = np.zeros((4,4), dtype='<U2')
+                for p in range(len(bloquito)):
+                    for j in range(len(bloquito[p])):
+                        etapa4[p, j] = etapa4Cif(bloquito[:, j], matrixMultInv[p])
+                
+                bloquito = etapa4
             
             #Fazendo etapa6: InvShiftRows
                 for z in range(len(bloquito)):
@@ -406,17 +420,31 @@ def decifrar():
             
             cifrado.append(bloquito)
         
+        ultimo = retirarPkcs7(cifrado[-1])
+        cifrado = cifrado[:-1]
         cifrado = np.array(cifrado)
         stringResult = ""
         for i in cifrado:
             for x in i.T:
                 for t in x:
-                    stringResult += bytes.fromhex(t).decode('ascii')
+                    stringResult += str(t)
+        for i in ultimo:
+            stringResult += str(i)
                 
-        newFileName = input("Qual o nome do arquivo a guardar o conteudo descriptografado resultante? (não esqueça a extensao)")
+        newFileName = input("Qual o nome do arquivo a guardar o conteudo descriptografado resultante?")
+        newFileName += ".bin"
+        
+        with open(newFileName, 'wb') as f:
+            binary_data = bytes.fromhex(stringResult)
+            f.write(binary_data)
+        
+        newFileName = newFileName[:-3] + "ASCII.txt"
         
         with open(newFileName, 'w') as f:
-            f.write(stringResult)
+            binary_data = bytes.fromhex(stringResult)
+            ascii_text = binary_data.decode('ascii')
+            f.write(ascii_text)
+            
                 
             
                 
@@ -442,3 +470,5 @@ while continuar:
         continuar = False
     else:
         print("Opção inválida!")
+
+
