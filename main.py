@@ -1,7 +1,9 @@
+#Alunos: Matheus Bailer Demmer e Augusto Dalpra
 import os
 import numpy as np
 import math
 import base64
+
 
 
 
@@ -432,18 +434,16 @@ def decifrar():
             stringResult += str(i)
                 
         newFileName = input("Qual o nome do arquivo a guardar o conteudo descriptografado resultante?")
-        newFileName += ".bin"
         
         with open(newFileName, 'wb') as f:
             binary_data = bytes.fromhex(stringResult)
             f.write(binary_data)
         
-        newFileName = newFileName[:-3] + "ASCII.txt"
+        newFileName += ".bin"
         
-        with open(newFileName, 'w') as f:
+        with open(newFileName, 'wb') as f:
             binary_data = bytes.fromhex(stringResult)
-            ascii_text = binary_data.decode('ascii')
-            f.write(ascii_text)
+            f.write(binary_data)
             
                 
             
